@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "skilful-boulder-395614",
+  "private_key_id": "015edad5f17371fc813f555ce5a44e168c1e3d8f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCksFSVnc9GOPD6\ntiDC+PWI4A0B8VWF0dvpVGDb7oR5q8zNtgPOZVzVCFd/FrZ6Uv11mYNv+6PPNvpn\nGBnYGFnI+3607YTXGazBY1VK44toguXhIGArf/rO6jjvPiUYmGoBpOl6fPns+T7I\nwIRksex22ImJZpcn9Bip1WkYVe7dh4nxaE6d0Y+bwpt5iXZXcSQg+4aEJJj0RZqD\ndJYGe7rLNDiDIU58q8lh06VJYgoSaeTH8zGfMBHmBb0Ikrz/E8JGiL50/rQ9SmuE\nDAENouLxPNdjl2KVxU15j+RTVNofLz02T1z2FXEVZl/ZB/II7rckUURr2IJQF96M\nAE9xd095AgMBAAECggEAAkYcft3ZUCwGWMHVwTdohXmpeFDFmGXJwmabuUGpctge\nSWtVUV7ZKahWM+8jeRwm+34RgGTyMbDdw3lj1vXcHIArc1JRupoURm3JjlGGudxP\n0fxNU6BuXTfC7ju2jajCEvB82Ef8N+tHlIRC97R0sj3iZUMlPGQciJDFpRQ/qm+Y\nUYXqkKCGkP54I2spDErfikYVn2KekzzyGf0UBWSH4+pA/KKWE87nlXr6lBOf9BTl\nNVTHfUAs7P8csGIcC/yCmRfBujgrK3mU9UzdrQbnpTM4THU7lHKwIDeVs+pcWI96\nakCj2IUwSB3Er8VgEFyd7Bdvt+5Mol+DmIheO6PPMQKBgQDlkOWYI15faiwaP1pc\n0wyyj8Iu3OHABErNBv0AZc7Jji/ARg7J93zieFzRcjhV2NP7LaKVamh23NTP5eH6\n+n47GLCy0qVVW1C8OlDlaFhksYljgoMqCCun3oN/0MXI8vXUaZq97At1fHZGXHME\nSxXVbs12Dtenb7EAzWQE0YDkaQKBgQC3pv7QxuGcVMzkfYnjdX20nHhIxhC/ceaw\nygpOlu+PDD697+MtBjI4q7NsvRzkysMhu2tKQmIz1JgZ8Won39wyYefMRMUe52vA\nplQHV3ejvYdjs/IVfduvmusIGpIa647SA1PNWyd/PfewFz8Tg5Y/C+Dd/xJObsVL\n/w3ONkhwkQKBgQCiJnW1v43CUYkzRPp7xGscmSRs24HtklqPdVcxd7fXcEJUSmfZ\nyqEAikntewNFx/D7YyGK7m05QARlkJfNIjAVZ/wvY1B6+RQO0BYh5FFDVo+XpTEm\neDz1xtsVZg6+QLbZQXqWmesCIlacnmJzbuHOLwSbViKHVwIscecq7BxhuQKBgDBt\nxxBDAcd5zTYLrMrgdq+j+0wlftEdNho0jRdAUhfEwN7RXXTIB4JONNhd3jqvBVnl\n1FsWulK0ow9kS/wL2kMm8js5f0mw+QcqVUpCVHhHSGaQUyw7rizWi1ftuc2DhHv5\nCKZEfVveeWxkFOwObRZfCYNA+hDYwQpTTc6tHdkhAoGBALlk+UQq7RvwMF+RpGCQ\nnK7RBR6wwbmrNdqXKUue8ZDTT94urlCs+aRores/X2QAp3r85/Cct7vUlHicNxCP\n7TAR7souIimMYbbLqZ+gBuG3iAYOu07PzZOwvpauZ2NfKp4H4C6RMTU9yjfihnIC\nkEb1j+uNIF//FYEtc3fFgk98\n-----END PRIVATE KEY-----\n",
+  "client_email": "cloud-storage-devs@skilful-boulder-395614.iam.gserviceaccount.com",
+  "client_id": "116089575496863752642",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/cloud-storage-devs%40skilful-boulder-395614.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

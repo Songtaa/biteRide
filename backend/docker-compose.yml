@@ -1,0 +1,62 @@
+
+services:
+
+  pgadmin4:
+    build:
+      context: .
+      dockerfile: dockerfile.pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    networks:
+      - test_network
+    volumes:
+      - ./pgadmin_data:/var/lib/pgadmin/data
+
+
+  postgres:
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - test_network
+
+
+  web:
+    build: ./app
+    env_file:
+      - .env
+    environment:
+      #DATABASE_URL: "postgres://postgres:password@postgres:5432/project_tracker_db"
+      DATABASE_URL: 'postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_SERVER}/${POSTGRES_DB}'
+    restart: always
+    depends_on:
+      - postgres
+    volumes:
+      - ./app:/app
+    ports:
+      - "8000:8000"
+    networks:
+      - test_network
+
+networks:
+  test_network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+    driver: local
