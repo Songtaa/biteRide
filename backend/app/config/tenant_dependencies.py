@@ -1,12 +1,12 @@
 # app/config/tenant_dependencies.py
-from app.domains.school.models.tenant import Tenant
+from app.domains.tenants.models.tenant import Tenant
 from fastapi import Request, HTTPException, Depends
 from typing import Optional
 from uuid import UUID
 from sqlmodel.ext.asyncio.session import AsyncSession
 from app.db.session import get_tenant_session, get_master_session
-from app.domains.school.services.tenant import TenantService
-from app.domains.school.repository.tenant import TenantRepository
+from app.domains.tenants.services.tenant import TenantService
+from app.domains.tenants.repository.tenant import TenantRepository
 from sqlmodel import Session, select
 
 

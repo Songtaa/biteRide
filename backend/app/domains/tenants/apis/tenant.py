@@ -2,7 +2,7 @@ from typing import Annotated, AsyncGenerator, List
 
 from app.db.session import get_master_session
 # from app.utils.dependencies import get_master_engine
-from app.domains.school.services.tenant import (
+from app.domains.tenants.services.tenant import (
     TenantService,
     TenantCreate,
     TenantUpdate,

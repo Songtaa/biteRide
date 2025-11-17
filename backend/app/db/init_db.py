@@ -1,7 +1,25 @@
 from app.config.settings import settings
-from app.domains.auth.models.users import User
+# from app.domains.auth.models.users import User
+# from app.domains.auth.models.rbac_models import User
+
+# from app.domains.auth.models.tenant_user import TenantUser
+
+from app.domains.auth.models.rbac_models import (
+    User, 
+    Role, 
+    Permission, 
+    UserRole, 
+    RolePermission, 
+    UserPermission,
+)
+from app.domains.tenants.models.tenant_rbac_models import (
+    TenantUser,
+    TenantRole,
+    TenantUserRole,
+    TenantUserPermission,
+    TenantRolePermission,
+)
 from app.domains.auth.schemas.user_schema import UserCreate
-from app.domains.auth.models.tenant_user import TenantUser
 from app.domains.auth.services.tenant_user_service import TenantUserService
 from app.domains.auth.schemas.tenant_user import TenantUserCreate
 from sqlalchemy.orm import Session
@@ -19,10 +37,10 @@ from fastapi import APIRouter, Depends, status
 from app.db.session import get_master_session, get_tenant_session
 from sqlalchemy.ext.asyncio.session import AsyncSession
 from app.domains.auth.apis.users_router import create_user_Account
-from app.domains.school.services.tenant import TenantRepository
+from app.domains.tenants.services.tenant import TenantRepository
 import logging
-from app.domains.school.schemas.tenant import TenantCreate
-from app.domains.school.services.tenant import TenantService
+from app.domains.tenants.schemas.tenant import TenantCreate
+from app.domains.tenants.services.tenant import TenantService
 from app.utils.seeder import seed_tenant_admin_user, seed_global_admin_user
 from app.utils.schema_utils import SchemaFactory
 from sqlalchemy import pool, MetaData, text

@@ -20,4 +20,4 @@ class Tenant(APIBase, table=True):
     billing_tier: str = Field(max_length=50, default="basic")
 
     # Relationship to cached school data (optional)
-    schools: List["School"] = Relationship(back_populates="tenant")
+    # schools: List["School"] = Relationship(back_populates="tenant")

@@ -2,7 +2,15 @@ from typing import Annotated
 from app.domains.auth.schemas.user_schema import UserCreate
 from app.domains.auth.services.user_service import UserService
 from app.domains.auth.models.users import User
-from app.domains.auth.models.tenant_user import TenantUser
+# from app.domains.auth.models.tenant_user import TenantUser
+from app.domains.tenants.models.tenant_rbac_models import (
+    TenantUser,
+    TenantRole,
+    TenantUserRole,
+    TenantUserPermission,
+    TenantRolePermission,
+)
+
 from app.domains.auth.services.tenant_user_service import TenantUserService
 from app.domains.auth.schemas.tenant_user import TenantUserCreate
 from sqlalchemy.ext.asyncio import AsyncSession

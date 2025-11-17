@@ -5,8 +5,8 @@ from sqlmodel import Field, Relationship
 from app.db.base_class import APIBase
 
 # Runtime imports for link models
-from app.domains.school.models.tenant_role_permission import TenantRolePermission
-from app.domains.school.models.tenant_user_role import TenantUserRole
+from app.domains.tenants.models.tenant_role_permission import TenantRolePermission
+from app.domains.tenants.models.tenant_user_role import TenantUserRole
 
 if TYPE_CHECKING:
     from app.domains.auth.models.tenant_user import TenantUser

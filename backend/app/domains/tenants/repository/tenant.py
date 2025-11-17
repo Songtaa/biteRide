@@ -4,13 +4,13 @@ from app.utils.errors import TenantCreationException
 from app.utils.schema_utils import SchemaFactory
 from fastapi import HTTPException
 from sqlalchemy import select, text
-from app.domains.school.models.school import School
+# from app.domains.tenants.models.tenants import tenants
 from sqlmodel import Session
-from app.domains.school.models.tenant import Tenant
+from app.domains.tenants.models.tenant import Tenant
 from app.crud.base import BaseRepository
 from sqlmodel.ext.asyncio.session import AsyncSession
 from typing import Any, List, Optional, Dict
-from app.domains.school.schemas.tenant import TenantCreate, TenantUpdate, TenantSchema
+from app.domains.tenants.schemas.tenant import TenantCreate, TenantUpdate, TenantSchema
 
 
 class TenantRepository(BaseRepository[Tenant, TenantCreate, TenantUpdate]):

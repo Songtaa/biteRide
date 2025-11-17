@@ -1,5 +1,5 @@
 from http.client import HTTPException
-from app.domains.school.repository.tenant import TenantRepository
+from app.domains.tenants.repository.tenant import TenantRepository
 from fastapi import Request
 from sqlmodel import SQLModel
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, AsyncEngine

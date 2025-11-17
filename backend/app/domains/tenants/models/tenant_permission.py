@@ -3,7 +3,7 @@ from typing import List
 from sqlmodel import Field, Relationship
 
 from app.db.base_class import APIBase
-from app.domains.school.models.tenant_role_permission import TenantRolePermission
+from app.domains.tenants.models.tenant_role_permission import TenantRolePermission
 
 
 class TenantPermissionBase(APIBase):
