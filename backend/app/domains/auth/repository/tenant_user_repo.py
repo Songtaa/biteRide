@@ -1,16 +1,20 @@
 from typing import List, Optional
 
 from app.crud.base import BaseRepository, ModelType
-from app.domains.auth.models.users import User
+# from app.domains.auth.models.rbac_models import User
+# from app.domains.auth.models.rbac_models import UserRole
+from app.domains.auth.models.user import User
 from app.domains.auth.models.user_role import UserRole
-# from app.domains.auth.models.tenant_user import TenantUser
-from app.domains.tenants.models.tenant_rbac_models import (
-    TenantUser,
-    TenantRole,
-    TenantUserRole,
-    TenantUserPermission,
-    TenantRolePermission,
-)
+
+from app.domains.tenants.models.tenant_user import TenantUser
+from app.domains.tenants.models.link_rbac_models import TenantUserRole
+# from app.domains.tenants.models.tenant_rbac_models import (
+#     TenantUser,
+#     TenantRole,
+#     TenantUserRole,
+#     TenantUserPermission,
+#     TenantRolePermission,
+# )
 
 
 from app.domains.auth.schemas.tenant_user import TenantUserCreate, TenantUserSchema, TenantUserUpdate

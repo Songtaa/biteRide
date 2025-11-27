@@ -16,12 +16,12 @@ class UserBase(SQLModel):
     is_active: bool = True
     is_superuser: bool = False
     full_name: str | None = Field(default=None, max_length=255)
-    user_role: str = Field(default="user", max_length=255)
+    # user_roles: str = Field(default="user", max_length=255)
     # password: str = Field(min_length=8)
 
 
 class UserCreate(UserBase):
-    password: str = Field(min_length=8, max_length=40)
+    password: str = Field(min_length=8, max_length=72)
 
 
 class UserUpdate(UserBase):

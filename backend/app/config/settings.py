@@ -51,7 +51,7 @@ class Settings(BaseSettings):
     # --- Database Settings ---
     POSTGRES_USER: str = os.getenv("POSTGRES_USER", "postgres")
     POSTGRES_PASSWORD: str = os.getenv("POSTGRES_PASSWORD", "password")
-    POSTGRES_DB: str = os.getenv("POSTGRES_DB", "edutenant_db")
+    POSTGRES_DB: str = os.getenv("POSTGRES_DB", "biteRide")
     POSTGRES_SERVER: str = os.getenv("POSTGRES_SERVER", "postgres" if DOCKER else "localhost")
     POSTGRES_PORT: int = int(os.getenv("POSTGRES_PORT", 5432))
     DB_POOL_SIZE: int = 5
@@ -59,7 +59,7 @@ class Settings(BaseSettings):
 
     #  --- Default Tenant and admin ---
     INIT_DEFAULT_TENANT: bool = os.getenv("INIT_DEFAULT_TENANT", "false").lower() == "true"
-    DEFAULT_TENANT_SCHEMA: str = os.getenv("DEFAULT_TENANT_SCHEMA", "school_alpha")
+    DEFAULT_TENANT_SCHEMA: str = os.getenv("DEFAULT_TENANT_SCHEMA", "client_alpha")
     DEFAULT_TENANT_ADMIN_EMAIL: str = os.getenv("DEFAULT_TENANT_ADMIN_EMAIL", "admin@schoolalpha.com")
     DEFAULT_TENANT_ADMIN_PASSWORD: str = os.getenv("DEFAULT_TENANT_ADMIN_PASSWORD", "securepass")
     DEFAULT_TENANT_NAME: str = os.getenv("DEFAULT_TENANT_NAME","ACME_Inc")
@@ -99,6 +99,7 @@ class Settings(BaseSettings):
     FIRST_SUPERUSER_PASSWORD: str = "supersecure"
     FIRST_SUPERUSER_NAME: str = "Global Admin"
     FIRST_SUPERUSER_ROLE: str = "admin"
+    # FIRST_SUPERUSER_USERNAME: str = ""
 
     # --- CORS Settings ---
     BACKEND_CORS_ORIGINS: Annotated[
@@ -118,7 +119,7 @@ class Settings(BaseSettings):
         os.getenv("POSTGRES_SERVER", "localhost") if not DOCKER else "postgres"
     )
     POSTGRES_PORT: int = int(os.getenv("POSTGRES_PORT", 5432))
-    PROJECT_NAME: str ="FastEdu Management App"
+    PROJECT_NAME: str ="biteRide Management App"
     # SENTRY_DSN: HttpUrl | None = None
     # POSTGRES_SERVER: str = "postgres"
     # POSTGRES_PORT: int = 5432
@@ -209,4 +210,4 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
-# print(settings.SHARED_DB_URL)
+# print(settings.MASTER_DB_URL)

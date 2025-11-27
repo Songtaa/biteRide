@@ -2,7 +2,7 @@ from typing import Tuple
 from sqlalchemy import MetaData
 from sqlmodel import SQLModel
 from app.domains.tenants.models.tenant import Tenant
-from app.domains.auth.models.users import User
+from app.domains.auth.models.user import User
 from app.db.base_class import APIBase
 
 import logging

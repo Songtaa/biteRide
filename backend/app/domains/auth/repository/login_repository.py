@@ -1,5 +1,5 @@
 from app.crud.base import BaseRepository
-from app.domains.auth.models.users import User
+from app.domains.auth.models.user import User
 from app.domains.auth.schemas.user_account import UserCreate, UserUpdate
 import jwt
 from datetime import datetime

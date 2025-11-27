@@ -1,7 +1,9 @@
 from typing import List, Optional
 
 from app.crud.base import BaseRepository, ModelType
-from app.domains.auth.models.users import User
+# from app.domains.auth.models.rbac_models import User
+# from app.domains.auth.models.rbac_models import UserRole
+from app.domains.auth.models.user import User
 from app.domains.auth.models.user_role import UserRole
 from app.domains.auth.schemas.user_schema import UserCreate, UserSchema, UserUpdate
 from pydantic import UUID4
@@ -37,7 +39,7 @@ class UserRepository(BaseRepository[ModelType, UserCreate, UserUpdate]):
 
     async def get_user_by_email(self, email: str):
         # statement = select(User).where(User.email == email)
-        statement = select(User).options(selectinload(User.roles)).where(User.email == email)
+        statement = select(User).options(selectinload(User.user_roles)).where(User.email == email)
 
         result = await self.session.execute(statement)
 
@@ -98,8 +100,8 @@ class UserRepository(BaseRepository[ModelType, UserCreate, UserUpdate]):
 
 
     def assign_role(self, user_id: UUID, role_id: UUID):
-        user_role = UserRole(user_id=user_id, role_id=role_id)
-        self.session.add(user_role)
+        user_roles = UserRole(user_id=user_id, role_id=role_id)
+        self.session.add(user_roles)
         self.session.commit()
         return {"message": "Role assigned successfully"}
     

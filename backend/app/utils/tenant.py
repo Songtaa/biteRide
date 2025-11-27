@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncEngine
 from sqlalchemy import text
 from app.db.session import master_async_engine, get_tenant_engine
-from app.domains.auth.models.users import User  # Import any models to trigger SQLModel metadata registration
+from app.domains.auth.models.user import User  # Import any models to trigger SQLModel metadata registration
 from app.db.base_class import APIBase
 from sqlalchemy.ext.asyncio import AsyncSession
 

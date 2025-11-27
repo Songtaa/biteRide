@@ -1,33 +1,20 @@
-from datetime import datetime
-from typing import Optional
-from uuid import UUID
+# # app/domains/tenants/models/tenant_user_permission.py
+# from __future__ import annotations
+# from typing import Optional
+# from uuid import UUID
+# from sqlmodel import Field, SQLModel, Relationship
+# from sqlalchemy.orm import Mapped
+# from app.db.base_class import APIBase
 
-from sqlmodel import Field, Relationship
+# class TenantUserPermission(APIBase, table=True):
+#     __tablename__ = "tenant_user_permissions"
 
-from app.db.base_class import APIBase
+#     tenant_user_id: UUID = Field(foreign_key="public.tenant_users.id", primary_key=True)
+#     tenant_permission_id: UUID = Field(foreign_key="public.tenant_permissions.id", primary_key=True)
 
+#     tenant_user: Mapped[Optional["TenantUser"]] = Relationship(back_populates="user_permissions")
+#     tenant_permission: Mapped[Optional["TenantPermission"]] = Relationship(back_populates="user_permissions")
 
-class TenantUserPermissionBase(APIBase):
-    expires_at: Optional[datetime] = None
-
-
-class TenantUserPermission(TenantUserPermissionBase, table=True):
-    __tablename__ = "tenant_user_permissions"
-
-    user_id: UUID = Field(
-        foreign_key="tenant_users.id",
-        primary_key=True
-    )
-    permission_id: UUID = Field(
-        foreign_key="public.permissions.id",
-        primary_key=True
-    )
-
-    # Relationship to permission (many-to-one)
-    # permission: "TenantPermission" = Relationship(back_populates="direct_user_assignments")
-    # user: Optional["TenantUser"] = Relationship(
-    #     back_populates="tenant_user_permissions",
-    # )
-
-    user: Optional["User"] = Relationship(back_populates="tenant_user_permissions")
-    permission: Optional["Permission"] = Relationship(back_populates="user_permissions")
+#     expires_at: Optional[str] = Field(default=None)
+#     scope: Optional[str] = Field(default=None)
+# #

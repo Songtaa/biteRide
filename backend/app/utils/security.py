@@ -6,7 +6,7 @@ from typing import Optional
 # from jose import JWTError, jwt
 import jwt
 from app.config.settings import settings
-from app.domains.auth.models.users import User
+from app.domains.auth.models.user import User
 from fastapi import Request, status
 from fastapi.exceptions import HTTPException
 from fastapi.security import OAuth2PasswordBearer
@@ -18,6 +18,15 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 
 
 class Security:
+    MAX_BCRYPT_PASSWORD_BYTES = 72
+
+    @staticmethod
+    def generate_password_hash(password: str) -> str:
+        # truncate to bcrypt max length
+        truncated = password[:Security.MAX_BCRYPT_PASSWORD_BYTES]
+        return pwd_context.hash(truncated)
+    
+    
     @staticmethod
     def get_user_by_email(username: str, db: Session):
         user = db.query(User).filter_by(email=username).first()
@@ -39,11 +48,11 @@ class Security:
             return False
         return db_user
 
-    # function to get hash password
-    @staticmethod
-    def generate_password_hash(password: str):
-        hash = pwd_context.hash(password)
-        return hash
+    # # function to get hash password
+    # @staticmethod
+    # def generate_password_hash(password: str):
+    #     hash = pwd_context.hash(password)
+    #     return hash
 
     @staticmethod
     def create_access_token(

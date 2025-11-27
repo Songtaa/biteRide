@@ -1,28 +1,15 @@
-from typing import List, Optional
-from uuid import uuid4, UUID
-
-from sqlmodel import Field, Relationship
-
+# app/domains/auth/models/role.py
+from __future__ import annotations
+from typing import List
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.db.base_class import APIBase
-from app.domains.auth.models.role_permission import RolePermission
-from app.domains.auth.models.user_role import UserRole
 
-
-class Role(APIBase, table=True):
+class Role(APIBase):
     __tablename__ = "roles"
-    __table_args__ = {'schema': 'public'}
+    __table_args__ = {"schema": "public"}
 
-    id: UUID = Field(default_factory=uuid4, primary_key=True)
-    name: str = Field(index=True, unique=True, max_length=50)
-    description: Optional[str] = Field(default=None, max_length=500)
+    name: Mapped[str] = mapped_column(unique=True, index=True)
+    description: Mapped[str] = mapped_column(nullable=False)
 
-    users: List["User"] = Relationship(
-        back_populates="roles",
-        link_model=UserRole
-    )
-    permissions: List["Permission"] = Relationship(
-        back_populates="roles",
-        link_model=RolePermission,
-    )
-    # role_permissions: List["RolePermission"] = Relationship(back_populates="role")
-    # user_roles: List["UserRole"] = Relationship(back_populates="role")
+    user_roles: Mapped[List["UserRole"]] = relationship(back_populates="role")
+    role_permissions: Mapped[List["RolePermission"]] = relationship(back_populates="role")

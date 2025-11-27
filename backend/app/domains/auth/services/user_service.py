@@ -6,7 +6,7 @@ from app.domains.auth.schemas.user_schema import (
     UserSchema,
     UserUpdate,
 )
-from app.domains.auth.models.users import User
+from app.domains.auth.models.user import User
 from fastapi import HTTPException
 from pydantic import UUID4
 from sqlmodel.ext.asyncio.session import AsyncSession

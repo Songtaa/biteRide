@@ -2,7 +2,7 @@ from datetime import datetime, timedelta, timezone
 
 from app.config.settings import settings
 from app.domains.auth.repository.user_repository import UserRepository
-from app.domains.auth.models.users import User
+from app.domains.auth.models.user import User
 from fastapi.responses import JSONResponse
 from app.utils.errors import InvalidCredentials
 from app.utils.security import Security

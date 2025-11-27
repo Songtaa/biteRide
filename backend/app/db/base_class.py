@@ -1,23 +1,25 @@
-from typing import Optional
+# app/db/base_class.py
+from __future__ import annotations
 import uuid
 from datetime import datetime
 from functools import reduce
 
 import inflect
-from sqlmodel import SQLModel, Field
-from sqlalchemy.ext.declarative import declared_attr
-
+from sqlalchemy.orm import declarative_base, declared_attr, Mapped, mapped_column
+from sqlalchemy.dialects.postgresql import UUID as PG_UUID
+from sqlalchemy import DateTime
 
 # Function to convert CamelCase to snake_case
-def change_case(str: str):
-    return reduce(lambda x, y: x + ("_" if y.isupper() else "") + y, str).lower()
+def change_case(name: str) -> str:
+    return reduce(lambda x, y: x + ("_" if y.isupper() else "") + y, name).lower()
 
 
-# Base class using SQLModel
-class Base(SQLModel):
-    id: Optional[uuid.UUID] = Field(
-        default_factory=uuid.uuid4, primary_key=True, index=True
-    )
+# SQLAlchemy Declarative Base
+Base = declarative_base()
+
+
+class BaseMixin:
+    """Base mixin for all models."""
 
     @declared_attr
     def __tablename__(cls) -> str:
@@ -25,18 +27,63 @@ class Base(SQLModel):
         p = inflect.engine()
         return p.plural(camel_check.lower())
 
-
-class APIBase(Base):  # `table=True` makes it a table model in SQLModel
-    model_config = {
-        "arbitrary_types_allowed": True
-    }
-    created_date: Optional[datetime] = Field(
-        default_factory=datetime.now, nullable=False
-    )
-    updated_date: Optional[datetime] = Field(
-        default_factory=datetime.now, nullable=False
+    id: Mapped[uuid.UUID] = mapped_column(
+        PG_UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+        index=True,
     )
 
+    created_date: Mapped[datetime] = mapped_column(
+        DateTime, default=datetime.utcnow, nullable=False
+    )
+    updated_date: Mapped[datetime] = mapped_column(
+        DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False
+    )
+
+
+class APIBase(BaseMixin, Base):
+    """Base class for API models."""
+    __abstract__ = True  # ensures SQLAlchemy does not create a table for this class
+
+# from typing import Optional
+# import uuid
+# from datetime import datetime
+# from functools import reduce
+
+# import inflect
+# from sqlmodel import SQLModel, Field
+# from sqlalchemy.ext.declarative import declared_attr
+
+
+# # Function to convert CamelCase to snake_case
+# def change_case(str: str):
+#     return reduce(lambda x, y: x + ("_" if y.isupper() else "") + y, str).lower()
+
+
+# # Base class using SQLModel
+# class Base(SQLModel):
+#     id: Optional[uuid.UUID] = Field(
+#         default_factory=uuid.uuid4, primary_key=True, index=True
+#     )
+
+#     @declared_attr
+#     def __tablename__(cls) -> str:
+#         camel_check = change_case(cls.__name__)
+#         p = inflect.engine()
+#         return p.plural(camel_check.lower())
+
+
+# class APIBase(Base):  # `table=True` makes it a table model in SQLModel
+#     model_config = {
+#         "arbitrary_types_allowed": True
+#     }
+#     created_date: Optional[datetime] = Field(
+#         default_factory=datetime.now, nullable=False
+#     )
+#     updated_date: Optional[datetime] = Field(
+#         default_factory=datetime.now, nullable=False
+#     )
 
 # import typing as t
 # import uuid

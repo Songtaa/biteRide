@@ -1,32 +1,32 @@
+# app/domains/tenants/models/tenant_role.py
 from __future__ import annotations
-from typing import TYPE_CHECKING, List, Optional
-from uuid import UUID, uuid4
-from sqlmodel import Field, Relationship
+from typing import List
+from uuid import UUID
+
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.dialects.postgresql import UUID as PG_UUID
+from sqlalchemy import ForeignKey
 from app.db.base_class import APIBase
 
-# Runtime imports for link models
-from app.domains.tenants.models.tenant_role_permission import TenantRolePermission
-from app.domains.tenants.models.tenant_user_role import TenantUserRole
 
-if TYPE_CHECKING:
-    from app.domains.auth.models.tenant_user import TenantUser
-    from app.domains.school.models.tenant_permission import TenantPermission
-
-
-class TenantRoleBase(APIBase):
-    name: str = Field(max_length=50, unique=True, index=True)
-    description: Optional[str] = Field(default=None, max_length=200)
-    is_system: bool = Field(default=False)
-
-
-class TenantRole(TenantRoleBase, table=True):
+class TenantRole(APIBase):
     __tablename__ = "tenant_roles"
 
-    permissions: List["TenantPermission"] = Relationship(
-        back_populates="roles",
-        link_model=TenantRolePermission
+    name: Mapped[str] = mapped_column(index=True)
+    description: Mapped[str | None] = mapped_column(nullable=True)
+
+    tenant_id: Mapped[UUID] = mapped_column(
+        PG_UUID(as_uuid=True),
+        ForeignKey("public.tenants.id")
     )
-    users: List["TenantUser"] = Relationship(
+
+    tenant: Mapped["Tenant"] = relationship(back_populates="tenant_schema_roles")
+
+    user_roles: Mapped[List["TenantUserRole"]] = relationship(back_populates="role")
+    role_permissions: Mapped[List["TenantRolePermission"]] = relationship(back_populates="role")
+
+    users: Mapped[List["TenantUser"]] = relationship(
+        secondary="tenant_user_roles",
         back_populates="roles",
-        link_model=TenantUserRole
+        viewonly=True
     )

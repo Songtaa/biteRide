@@ -1,14 +1,7 @@
 from typing import List, Optional
 
 from app.domains.auth.repository.tenant_user_repo import TenantUserRepository
-# from app.domains.auth.models.tenant_user import TenantUser
-from app.domains.tenants.models.tenant_rbac_models import (
-    TenantUser,
-    TenantRole,
-    TenantUserRole,
-    TenantUserPermission,
-    TenantRolePermission,
-)
+from app.domains.tenants.models.tenant_user import TenantUser
 
 from app.domains.auth.schemas.tenant_user import (
     TenantUserCreate, 

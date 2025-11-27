@@ -1,30 +1,23 @@
+# app/domains/auth/models/token_blocklist.py
+from __future__ import annotations
 from datetime import datetime
+from typing import Optional
 from uuid import UUID
-
-from sqlalchemy import Column, ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import ForeignKey
 from sqlalchemy.dialects.postgresql import UUID as PG_UUID
-from sqlmodel import Field, Relationship
 
 from app.db.base_class import APIBase
 
-
-class TokenBlocklist(APIBase, table=True):
+class TokenBlocklist(APIBase):
     __tablename__ = "token_blocklist"
     __table_args__ = {"schema": "public"}
 
-    jti: str = Field(index=True, nullable=False)
-    expires_at: datetime = Field(nullable=False)
+    jti: Mapped[str] = mapped_column(nullable=False, index=True)
+    expires_at: Mapped[datetime] = mapped_column(nullable=False)
 
-    global_user_id: UUID | None = Field(
-        default=None,
-        sa_column=Column(PG_UUID(as_uuid=True), ForeignKey("public.users.id"), nullable=True)
-    )
+    global_user_id: Mapped[Optional[UUID]] = mapped_column(PG_UUID(as_uuid=True), ForeignKey("public.users.id"), nullable=True)
+    tenant_user_id: Mapped[Optional[UUID]] = mapped_column(PG_UUID(as_uuid=True), nullable=True)
+    tenant: Mapped[Optional[str]] = mapped_column(default=None, index=True)
 
-    tenant_user_id: UUID | None = Field(
-        default=None,
-        sa_column=Column(PG_UUID(as_uuid=True), nullable=True)
-    )
-
-    tenant: str | None = Field(default=None, index=True)
-
-    global_user: "User" = Relationship(back_populates="tokens", sa_relationship_kwargs={"viewonly": True})
+    global_user: Mapped[Optional["User"]] = relationship(back_populates="tokens", viewonly=True)

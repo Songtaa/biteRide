@@ -10,7 +10,7 @@ from app.domains.auth.services.token import TokenService
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from app.db.session import db_session_dependency
-from app.domains.auth.models.users import User
+from app.domains.auth.models.user import User
 from app.db.redis import token_in_blocklist
 
 # from src.db.redis import token_in_blocklist

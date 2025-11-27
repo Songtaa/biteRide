@@ -1,23 +1,18 @@
-from datetime import datetime
-from typing import List, Optional
-from uuid import UUID
-from sqlmodel import Field, Relationship
+# # app/domains/tenants/models/tenant_role_permission.py
+# from __future__ import annotations
+# from typing import Optional
+# from uuid import UUID
+# from sqlmodel import Field, SQLModel, Relationship
+# from sqlalchemy.orm import Mapped
+# from app.db.base_class import APIBase
 
-from app.db.base_class import APIBase
+# class TenantRolePermission(APIBase, table=True):
+#     __tablename__ = "tenant_role_permissions"
 
+#     tenant_role_id: UUID = Field(foreign_key="public.tenant_roles.id", primary_key=True)
+#     tenant_permission_id: UUID = Field(foreign_key="public.tenant_permissions.id", primary_key=True)
 
-class TenantRolePermission(APIBase, table=True):
-    __tablename__ = "tenant_role_permissions"
+#     tenant_role: Mapped[Optional["TenantRole"]] = Relationship(back_populates="role_permissions")
+#     tenant_permission: Mapped[Optional["TenantPermission"]] = Relationship(back_populates="role_permissions")
 
-    role_id: UUID = Field(
-        foreign_key="tenant_roles.id",
-        primary_key=True
-    )
-    permission_id: UUID = Field(
-        foreign_key="public.permissions.id",
-        primary_key=True
-    )
-
-    granted_at: Optional[datetime] = Field(default_factory=datetime.now)
-    granted_by: Optional[UUID] = Field(default=None, foreign_key="tenant_users.id")
-    # role: List["TenantRole"] = Relationship(back_populates="permissions")
+#     granted_at: Optional[str] = Field(default=None)

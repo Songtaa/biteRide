@@ -14,14 +14,14 @@ from app.utils.tenant import create_schema, create_schema_tables
 from app.domains.auth.schemas.user_schema import UserCreate
 from app.db.session import get_tenant_session
 from app.utils.dependencies import get_master_engine
-
-from app.domains.tenants.models.tenant_rbac_models import (
-    TenantUser,
-    TenantRole,
-    TenantUserRole,
-    TenantUserPermission,
-    TenantRolePermission,
-)
+from app.domains.tenants.models.tenant_user import TenantUser
+# from app.domains.tenants.models.tenant_rbac_models import (
+#     TenantUser,
+#     TenantRole,
+#     TenantUserRole,
+#     TenantUserPermission,
+#     TenantRolePermission,
+# )
 
 
 from sqlalchemy.ext.asyncio import AsyncSession, AsyncEngine
