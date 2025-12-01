@@ -3,16 +3,9 @@ from app.domains.auth.schemas.user_schema import UserCreate
 from app.domains.auth.services.user_service import UserService
 from app.domains.auth.models.user import User
 from app.domains.tenants.models.tenant_user import TenantUser
-# from app.domains.tenants.models.tenant_rbac_models import (
-#     TenantUser,
-#     TenantRole,
-#     TenantUserRole,
-#     TenantUserPermission,
-#     TenantRolePermission,
-# )
 
 from app.domains.auth.services.tenant_user_service import TenantUserService
-from app.domains.auth.schemas.tenant_user import TenantUserCreate
+from app.domains.tenants.schemas.tenant_user import TenantUserCreate
 from sqlalchemy.ext.asyncio import AsyncSession
 import logging
 from sqlmodel import SQLModel
@@ -51,8 +44,8 @@ async def seed_global_admin_user(
 async def seed_tenant_admin_user(
     session: AsyncSession, 
     tenant_user_data: TenantUserCreate, 
-    user_model: type[TenantUser]
-) -> None:
+    user_model: type[TenantUser],
+)-> None:
     tenant_user_service = TenantUserService(session, model=user_model)
 
     if await tenant_user_service.user_exists(tenant_user_data.email):
@@ -63,3 +56,22 @@ async def seed_tenant_admin_user(
     await tenant_user_service.create(tenant_user_data)
     await session.commit()
     logger.info(f"Tenant admin user created successfully in.")
+
+
+
+# async def seed_tenant_admin_user(
+#     session: AsyncSession, 
+#     tenant_user_data: TenantUserCreate, 
+#     user_model: type[TenantUser],
+# ):
+#     service = TenantUserService(session, model=user_model)
+
+#     if await service.user_exists(tenant_user_data.email):
+#         logger.info(f"Tenant admin {tenant_user_data.email} already exists. Skipping.")
+#         return
+
+#     logger.info(f"Creating tenant admin user: {tenant_user_data.email}")
+#     await service.create(tenant_user_data)
+#     await session.commit()
+#     logger.info("Tenant admin created successfully.")
+

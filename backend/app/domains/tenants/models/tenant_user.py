@@ -12,16 +12,14 @@ from app.db.base_class import APIBase
 class TenantUser(APIBase):
     __tablename__ = "tenant_users"
 
-    id: Mapped[UUID] = mapped_column(
-        PG_UUID(as_uuid=True), primary_key=True, default=uuid4
-    )
 
     email: Mapped[str] = mapped_column(index=True)
     password: Mapped[str] = mapped_column(nullable=False)
     full_name: Mapped[Optional[str]] = mapped_column(nullable=True)
     is_active: Mapped[bool] = mapped_column(default=True)
+    is_superuser: bool = False
 
-    # belongs to the tenant's schema
+
     tenant_id: Mapped[UUID] = mapped_column(
         PG_UUID(as_uuid=True),
         ForeignKey("public.tenants.id"),
@@ -29,7 +27,7 @@ class TenantUser(APIBase):
 
     tenant: Mapped["Tenant"] = relationship(back_populates="tenant_schema_users")
 
-    # RBAC
+
     user_roles: Mapped[List["TenantUserRole"]] = relationship(back_populates="tenant_user")
     user_permissions: Mapped[List["TenantUserPermission"]] = relationship(back_populates="tenant_user")
 

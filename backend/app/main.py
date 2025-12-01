@@ -54,7 +54,7 @@ if settings.BACKEND_CORS_ORIGINS:
 # Custom tenant/global middleware
 app.add_middleware(
     TenantSubdomainMiddleware,
-    base_domain="biteRide.localhost",
+    base_domain="biteride.localhost",
     global_prefix="api",
 )
 

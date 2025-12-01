@@ -1,8 +1,4 @@
 from app.config.settings import settings
-# from app.domains.auth.models.users import User
-# from app.domains.auth.models.rbac_models import User
-
-# from app.domains.auth.models.tenant_user import TenantUser
 
 from app.domains.auth.models.user import User
 from app.domains.auth.models.role import Role
@@ -11,19 +7,12 @@ from app.domains.auth.models.user_role import UserRole
 from app.domains.auth.models.role_permission import RolePermission
 from app.domains.auth.models.user_permission import UserPermission
 
-# from app.domains.tenants.models.tenant_rbac_models import (
-#     TenantUser,
-#     TenantRole,
-#     TenantUserRole,
-#     TenantUserPermission,
-#     TenantRolePermission,
-# )
 from app.domains.tenants.models.user_tenant import UserTenant
 from app.domains.tenants.models.link_rbac_models import TenantUserRole, TenantUserPermission, TenantRolePermission
 from app.domains.tenants.models.tenant_role import TenantRole
 from app.domains.auth.schemas.user_schema import UserCreate
 from app.domains.auth.services.tenant_user_service import TenantUserService
-from app.domains.auth.schemas.tenant_user import TenantUserCreate
+from app.domains.tenants.schemas.tenant_user import TenantUserCreate
 from app.domains.tenants.models.tenant_user import TenantUser
 from sqlalchemy.orm import Session
 from app.domains.auth.services.user_service import UserService
@@ -110,43 +99,42 @@ async def init_default_tenant() -> None:
         billing_tier=settings.DEFAULT_BILLING_TIER,
     )
 
+   
+    async with get_master_session() as master_session:
+        tenant_service = TenantService(master_session)
+
+        exists_by_sub = await tenant_service.repository.get_by_subdomain(tenant_data.subdomain)
+        exists_by_schema = await tenant_service.repository.get_by_schema_name(tenant_data.schema_name)
+
+        if exists_by_sub or exists_by_schema:
+            logger.info("Default tenant already exists. Skipping.")
+            return
+
+        # Create tenant record (NO admin yet)
+        created_tenant = await tenant_service.create_tenant(tenant_data)
+
+    
     tenant_admin = TenantUserCreate(
         email=settings.DEFAULT_TENANT_ADMIN_EMAIL,
         password=settings.DEFAULT_TENANT_ADMIN_PASSWORD,
         full_name=settings.DEFAULT_TENANT_ADMIN_NAME,
         user_role=settings.DEFAULT_TENANT_ADMIN_ROLE,
         is_superuser=True,
+        tenant_id=created_tenant.id,
     )
 
-    # Use master session to check if tenant already exists
-    async with get_master_session() as session:
-        tenant_service = TenantService(session)
-        existing_tenant_subdomain = await tenant_service.repository.get_by_subdomain(tenant_data.subdomain)
-        existing_tenant_schema_name = await tenant_service.repository.get_by_schema_name(tenant_data.schema_name)
-
-        if existing_tenant_subdomain or existing_tenant_schema_name:
-            logger.info(f"Tenant '{tenant_data.subdomain}' or '{tenant_data.schema_name}' already exists. Skipping creation.")
-            return
-
-   
+    
     async with master_async_engine.begin() as conn:
-        await conn.execute(text(f'CREATE SCHEMA IF NOT EXISTS "{tenant_data.schema_name}"'))
+        await conn.execute(text(f'CREATE SCHEMA IF NOT EXISTS "{created_tenant.schema_name}"'))
 
-    # Clone schema metadata
-    factory = SchemaFactory(tenant_data.schema_name)
+    factory = SchemaFactory(created_tenant.schema_name)
     metadata, _ = factory.clone()
 
-    # Use tenant engine to create tables
-    tenant_engine = get_tenant_engine(tenant_data.schema_name)
-    logger.info(f"Tables for tenant schema: {list(metadata.tables.keys())}")
+    tenant_engine = get_tenant_engine(created_tenant.schema_name)
     async with tenant_engine.begin() as conn:
         await conn.run_sync(metadata.create_all)
 
-    # Now insert tenant record and create tenant admin
-    async with get_master_session() as session:
-        tenant_service = TenantService(session)
-        created_tenant = await tenant_service.create_tenant(tenant_data)
-
+    
     async with get_tenant_session(created_tenant.schema_name) as tenant_session:
         await seed_tenant_admin_user(
             session=tenant_session,
@@ -154,4 +142,4 @@ async def init_default_tenant() -> None:
             user_model=TenantUser
         )
 
-    logger.info(f"Default tenant '{tenant_data.subdomain}' initialized successfully.")
+    logger.info("Default tenant initialized successfully.")

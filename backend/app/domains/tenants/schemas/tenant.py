@@ -18,7 +18,6 @@ class TenantCreate(TenantBase):
     pass
 
 class TenantUpdate(TenantBase):
-   
     schema_name: Optional[str] = None
     subdomain: Optional[str] = None
     is_active: Optional[bool] = None

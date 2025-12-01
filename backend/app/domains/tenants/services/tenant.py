@@ -12,6 +12,7 @@ from app.domains.tenants.models.tenant import Tenant
 from app.db.session import get_master_session
 from app.utils.tenant import create_schema, create_schema_tables
 from app.domains.auth.schemas.user_schema import UserCreate
+from app.domains.tenants.schemas.tenant_user import TenantUserCreate
 from app.db.session import get_tenant_session
 from app.utils.dependencies import get_master_engine
 from app.domains.tenants.models.tenant_user import TenantUser
@@ -43,18 +44,18 @@ class TenantService:
         return await self.repository.get_all()
 
     async def create_tenant(self, tenant_data: TenantCreate) -> TenantRead:
-        # Step 0: Check for domain/subdomain conflicts
+        
         if await self.repository.get_by_subdomain(tenant_data.subdomain):
             raise HTTPException(status_code=400, detail="Domain already in use")
 
         try:
-            schema_name = tenant_data.schema_name  # must now be passed explicitly
+            schema_name = tenant_data.schema_name 
 
-            # Step 1: Bootstrap schema if needed
+            
             bootstrapper = TenantBootstrapper(get_master_engine())
             await bootstrapper.bootstrap_if_needed(schema_name)
 
-            # Step 2: Create tenant
+            
             tenant = await self.repository.create(tenant_data)
             await self.session.commit()
 
@@ -65,15 +66,17 @@ class TenantService:
             raise HTTPException(status_code=500, detail=f"Failed to create tenant: {str(e)}")
 
 
-    async def create_tenant_with_admin(self, tenant_data: TenantCreate, admin_data: UserCreate):
+    async def create_tenant_with_admin(self, tenant_data: TenantCreate, admin_data: TenantUserCreate):
         """Create a tenant and seed a default admin user"""
         tenant_out = await self.create_tenant(tenant_data)
 
-        # Use tenant-specific session to seed admin
+        admin_data.tenant_id = tenant_out.id
+
         async with get_tenant_session(tenant_data.subdomain) as tenant_session:
             await seed_tenant_admin_user(session=tenant_session, user_data=admin_data, user_model=TenantUser)
 
         return tenant_out
+    
 
     async def get_tenant(self, tenant_id: UUID) -> TenantSchema:
         """Retrieve a tenant by ID"""

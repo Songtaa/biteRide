@@ -17,7 +17,7 @@ from app.domains.tenants.models.link_rbac_models import TenantUserRole
 # )
 
 
-from app.domains.auth.schemas.tenant_user import TenantUserCreate, TenantUserSchema, TenantUserUpdate
+from app.domains.tenants.schemas.tenant_user import TenantUserCreate, TenantUserSchema, TenantUserUpdate
 
 from pydantic import UUID4
 from sqlalchemy.exc import NoResultFound
@@ -63,22 +63,36 @@ class TenantUserRepository(BaseRepository[ModelType, TenantUserCreate, TenantUse
 
     
 
+    # async def create_user(self, user_data: TenantUserCreate):
+    #     user_data_dict = user_data.model_dump()
+
+    #     logger.info(f"Creating tenant user in model: {self.model.__tablename__}")
+    #     new_user = TenantUser(**user_data_dict)
+
+    #     new_user.password = Security.generate_password_hash(user_data_dict["password"])
+    #     # new_user.role = "user"
+
+
+    #     self.session.add(new_user)
+
+    #     await self.session.commit()
+    #     logger.info(f"Tenant user created with email: {new_user.email} and id: {new_user.id}")
+
+    #     return new_user
+    
+
     async def create_user(self, user_data: TenantUserCreate):
-        user_data_dict = user_data.model_dump()
+        data = user_data.model_dump()
 
-        logger.info(f"Creating tenant user in model: {self.model.__tablename__}")
-        new_user = TenantUser(**user_data_dict)
-
-        new_user.password = Security.generate_password_hash(user_data_dict["password"])
-        # new_user.role = "user"
-
+        new_user = self.model(**data)
+        new_user.password = Security.generate_password_hash(data["password"])
 
         self.session.add(new_user)
-
         await self.session.commit()
-        logger.info(f"Tenant user created with email: {new_user.email} and id: {new_user.id}")
 
+        logger.info(f"Tenant user created: {new_user.email} (tenant_id={new_user.tenant_id})")
         return new_user
+
 
     async def update(self, user: Type[TenantUser], user_data: TenantUserUpdate)-> TenantUserSchema:
         try:
