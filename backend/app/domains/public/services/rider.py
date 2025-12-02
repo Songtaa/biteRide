@@ -2,8 +2,8 @@ from typing import List, Optional
 from uuid import UUID
 from fastapi import HTTPException
 
-from app.repositories.rider_repository import RiderRepository
-from app.schemas.rider import (
+from app.domains.public.repository.rider import RiderRepository
+from app.domains.public.schemas.rider import (
     RiderCreate,
     RiderUpdate,
     RiderOut,

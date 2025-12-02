@@ -2,11 +2,11 @@ from typing import List
 from uuid import UUID
 from fastapi import HTTPException
 
-from app.domains.tenants.repository.rider_tenant import RiderTenantRepository
+from backend.app.domains.public.repository.rider_tenant import RiderTenantRepository
 from app.domains.tenants.repository import RiderRepository
 from app.domains.tenants.repository.tenant import TenantRepository
 
-from app.domains.tenants.schemas.rider import (
+from backend.app.domains.public.schemas.rider import (
     RiderTenantCreate,
     RiderTenantOut
 )

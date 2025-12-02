@@ -19,8 +19,6 @@ user_router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-
-
 async def get_master_session_dep() -> AsyncGenerator[AsyncSession, None]:
     async with get_master_session() as session:
         yield session

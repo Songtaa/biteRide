@@ -25,3 +25,10 @@ class RiderUpdate(SQLModel):
     vehicle_type: Optional[str] = None
     national_id: Optional[str] = None
     is_active: Optional[bool] = None
+    
+
+class RiderOut(RiderBase):
+    id: UUID
+
+    class Config:
+        from_attributes = True

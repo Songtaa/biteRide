@@ -4,8 +4,8 @@ from sqlmodel import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.crud.base import BaseRepository
-from app.domains.tenants.models import Rider
-from app.domains.tenants.schemas import RiderCreate, RiderUpdate
+from app.domains.public.models.rider import Rider
+from app.domains.public.schemas.rider import RiderCreate, RiderUpdate
 
 
 class RiderRepository(BaseRepository[Rider, RiderCreate, RiderUpdate]):

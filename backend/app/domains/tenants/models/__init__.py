@@ -6,8 +6,8 @@ from app.domains.tenants.models.tenant_role import TenantRole
 from app.domains.tenants.models.tenant_permission import TenantPermission
 from app.domains.tenants.models.tenant import Tenant
 from app.domains.tenants.models.tenant_user import TenantUser
-from app.domains.tenants.models.rider import Rider
-from app.domains.tenants.models.rider_tenant_link import RiderTenantLink
+from app.domains.public.models.rider import Rider
+from app.domains.public.models.rider_tenant_link import RiderTenantLink
 
 
 __all__ = [
