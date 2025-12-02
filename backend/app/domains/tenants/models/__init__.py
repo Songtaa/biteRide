@@ -6,6 +6,8 @@ from app.domains.tenants.models.tenant_role import TenantRole
 from app.domains.tenants.models.tenant_permission import TenantPermission
 from app.domains.tenants.models.tenant import Tenant
 from app.domains.tenants.models.tenant_user import TenantUser
+from app.domains.tenants.models.rider import Rider
+from app.domains.tenants.models.rider_tenant_link import RiderTenantLink
 
 
 __all__ = [
@@ -17,8 +19,8 @@ __all__ = [
 ]
 
 from app.domains.tenants.models.tenant import Tenant
-from app.domains.auth.models.token_blocklist import TokenBlocklist
-from app.domains.auth.models.refresh_token import RefreshToken
+from app.domains.public.models.token_blocklist import TokenBlocklist
+from app.domains.public.models.refresh_token import RefreshToken
 
 
 

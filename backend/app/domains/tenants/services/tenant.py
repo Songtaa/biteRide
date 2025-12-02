@@ -3,7 +3,7 @@ from typing import List, Optional
 from uuid import UUID
 from app.utils.tenant_bootstrapper import TenantBootstrapper
 from fastapi import Depends, HTTPException
-from app.domains.auth.services.user_service import UserService
+from app.domains.public.services.user_service import UserService
 from app.utils.seeder import seed_global_admin_user, seed_tenant_admin_user
 from sqlmodel import Session
 from app.domains.tenants.schemas.tenant import TenantCreate, TenantUpdate, TenantRead, TenantSchema
@@ -11,18 +11,12 @@ from app.domains.tenants.repository.tenant import TenantRepository
 from app.domains.tenants.models.tenant import Tenant
 from app.db.session import get_master_session
 from app.utils.tenant import create_schema, create_schema_tables
-from app.domains.auth.schemas.user_schema import UserCreate
+from app.domains.public.schemas.user_schema import UserCreate
 from app.domains.tenants.schemas.tenant_user import TenantUserCreate
 from app.db.session import get_tenant_session
 from app.utils.dependencies import get_master_engine
 from app.domains.tenants.models.tenant_user import TenantUser
-# from app.domains.tenants.models.tenant_rbac_models import (
-#     TenantUser,
-#     TenantRole,
-#     TenantUserRole,
-#     TenantUserPermission,
-#     TenantRolePermission,
-# )
+
 
 
 from sqlalchemy.ext.asyncio import AsyncSession, AsyncEngine

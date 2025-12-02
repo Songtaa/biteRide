@@ -6,7 +6,7 @@ from typing import Optional
 # from jose import JWTError, jwt
 import jwt
 from app.config.settings import settings
-from app.domains.auth.models.user import User
+from app.domains.public.models.user import User
 from fastapi import Request, status
 from fastapi.exceptions import HTTPException
 from fastapi.security import OAuth2PasswordBearer

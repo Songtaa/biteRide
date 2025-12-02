@@ -31,8 +31,14 @@ class Tenant(APIBase):
         cascade="all, delete-orphan",
     )
 
-    # Links global users → tenants
+    
     tenant_users: Mapped[list["UserTenant"]] = relationship(
         back_populates="tenant",
         cascade="all, delete-orphan",
+    )
+
+    riders: Mapped[list["Rider"]] = relationship(
+        secondary="rider_tenant_link",
+        back_populates="tenants",
+        viewonly=True
     )

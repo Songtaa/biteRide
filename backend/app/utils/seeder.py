@@ -1,10 +1,10 @@
 from typing import Annotated
-from app.domains.auth.schemas.user_schema import UserCreate
-from app.domains.auth.services.user_service import UserService
-from app.domains.auth.models.user import User
+from app.domains.public.schemas.user_schema import UserCreate
+from app.domains.public.services.user_service import UserService
+from app.domains.public.models.user import User
 from app.domains.tenants.models.tenant_user import TenantUser
 
-from app.domains.auth.services.tenant_user_service import TenantUserService
+from app.domains.public.services.tenant_user_service import TenantUserService
 from app.domains.tenants.schemas.tenant_user import TenantUserCreate
 from sqlalchemy.ext.asyncio import AsyncSession
 import logging

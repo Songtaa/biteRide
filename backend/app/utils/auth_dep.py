@@ -4,19 +4,19 @@ from fastapi import Depends, Request, status
 from fastapi.exceptions import HTTPException
 from fastapi.security import HTTPBearer
 from fastapi.security.http import HTTPAuthorizationCredentials
-from app.domains.auth.repository.token_blocklist import TokenBlocklistRepository
-# from app.domains.auth.repository.token_blocklist import TokenRepository
-from app.domains.auth.services.token import TokenService
+from app.domains.public.repository.token_blocklist import TokenBlocklistRepository
+# from app.domains.public.repository.token_blocklist import TokenRepository
+from app.domains.public.services.token import TokenService
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from app.db.session import db_session_dependency
-from app.domains.auth.models.user import User
+from app.domains.public.models.user import User
 from app.db.redis import token_in_blocklist
 
 # from src.db.redis import token_in_blocklist
 from app.utils.dependencies import get_master_session_dep
-from app.domains.auth.services.user_service import UserService
-from app.domains.auth.repository.user_repository import UserRepository
+from app.domains.public.services.user_service import UserService
+from app.domains.public.repository.user_repository import UserRepository
 from app.utils.security import Security
 from app.utils.errors import (
     InvalidToken,
@@ -25,8 +25,8 @@ from app.utils.errors import (
     InsufficientPermission,
     AccountNotVerified,
 )
-from app.domains.auth.services.user_service import UserService
-from app.domains.auth.services.role import RoleService
+from app.domains.public.services.user_service import UserService
+from app.domains.public.services.role import RoleService
 
 # sessionDep = Annotated[AsyncSession, Depends(db_session_dependency)]
 sessionDep = Annotated[AsyncSession, Depends(get_master_session_dep)]

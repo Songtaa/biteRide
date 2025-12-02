@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
-from app.domains.auth.apis.login_router import auth_router
+from app.domains.public.apis.login_router import auth_router
 from app.domains.tenants.apis.tenant import tenant_management_router
-from app.domains.auth.apis.users_router import user_router
-from app.domains.auth.apis.role import role_router
-from app.domains.auth.apis.permission import permission_router
+from app.domains.public.apis.users_router import user_router
+from app.domains.public.apis.role import role_router
+from app.domains.public.apis.permission import permission_router
 from app.config.tenant_dependencies import require_global_context
 
 global_router = APIRouter(dependencies=[Depends(require_global_context)])

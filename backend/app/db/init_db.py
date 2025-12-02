@@ -1,21 +1,21 @@
 from app.config.settings import settings
 
-from app.domains.auth.models.user import User
-from app.domains.auth.models.role import Role
-from app.domains.auth.models.permission import Permission
-from app.domains.auth.models.user_role import UserRole
-from app.domains.auth.models.role_permission import RolePermission
-from app.domains.auth.models.user_permission import UserPermission
+from app.domains.public.models.user import User
+from app.domains.public.models.role import Role
+from app.domains.public.models.permission import Permission
+from app.domains.public.models.user_role import UserRole
+from app.domains.public.models.role_permission import RolePermission
+from app.domains.public.models.user_permission import UserPermission
 
 from app.domains.tenants.models.user_tenant import UserTenant
 from app.domains.tenants.models.link_rbac_models import TenantUserRole, TenantUserPermission, TenantRolePermission
 from app.domains.tenants.models.tenant_role import TenantRole
-from app.domains.auth.schemas.user_schema import UserCreate
-from app.domains.auth.services.tenant_user_service import TenantUserService
+from app.domains.public.schemas.user_schema import UserCreate
+from app.domains.public.services.tenant_user_service import TenantUserService
 from app.domains.tenants.schemas.tenant_user import TenantUserCreate
 from app.domains.tenants.models.tenant_user import TenantUser
 from sqlalchemy.orm import Session
-from app.domains.auth.services.user_service import UserService
+from app.domains.public.services.user_service import UserService
 from sqlalchemy.ext.asyncio import AsyncSession, AsyncEngine
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import Session
@@ -28,7 +28,7 @@ from typing import Annotated, List
 from fastapi import APIRouter, Depends, status
 from app.db.session import get_master_session, get_tenant_session
 from sqlalchemy.ext.asyncio.session import AsyncSession
-from app.domains.auth.apis.users_router import create_user_Account
+from app.domains.public.apis.users_router import create_user_Account
 from app.domains.tenants.services.tenant import TenantRepository
 import logging
 from app.domains.tenants.schemas.tenant import TenantCreate
