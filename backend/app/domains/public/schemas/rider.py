@@ -1,6 +1,7 @@
 from typing import Optional, List
 from uuid import UUID
 from sqlmodel import SQLModel
+from pydantic import EmailStr
 
 
 class RiderBase(SQLModel):
@@ -8,6 +9,10 @@ class RiderBase(SQLModel):
     phone_number: str
     vehicle_type: str
     national_id: Optional[str] = None
+    email: Optional[EmailStr] = None
+    status: Optional[str] = "offline"
+    current_location: Optional[str] = None
+
 
 
 class RiderCreate(RiderBase):
@@ -25,6 +30,8 @@ class RiderUpdate(SQLModel):
     vehicle_type: Optional[str] = None
     national_id: Optional[str] = None
     is_active: Optional[bool] = None
+    status: Optional[str] = "offline"
+    current_location: Optional[str] = None
     
 
 class RiderOut(RiderBase):

@@ -9,3 +9,5 @@ class AssignRiderToTenant(SQLModel):
 class TenantRiderLinkRead(SQLModel):
     rider_id: UUID
     tenant_id: UUID
+
+    model_config = {"from_attributes": True}

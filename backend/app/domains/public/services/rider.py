@@ -1,42 +1,41 @@
-from typing import List, Optional
+# app/services/rider_service.py
+from typing import List
 from uuid import UUID
 from fastapi import HTTPException
 
+from sqlalchemy.ext.asyncio import AsyncSession
 from app.domains.public.repository.rider import RiderRepository
-from app.domains.public.schemas.rider import (
-    RiderCreate,
-    RiderUpdate,
-    RiderOut,
-)
+from app.domains.public.schemas.rider import RiderCreate, RiderUpdate, RiderRead
 
 
 class RiderService:
-    def __init__(self, rider_repo: RiderRepository):
-        self.rider_repo = rider_repo
+    def __init__(self, repo: RiderRepository):
+        self.repo = repo
 
-    async def create_rider(self, data: RiderCreate) -> RiderOut:
-        return await self.rider_repo.create(data)
+    async def create_rider(self, session: AsyncSession, data: RiderCreate):
+        # ensure unique phone
+        if await self.repo.get_by_phone(data.phone):
+            raise HTTPException(status_code=400, detail="Phone already exists")
+        return await self.repo.create(data)
 
-    async def get_rider(self, rider_id: UUID) -> RiderOut:
-        rider = await self.rider_repo.get_by_id(rider_id)
+    async def get_rider(self, session: AsyncSession, rider_id: UUID):
+        rider = await self.repo.get_by_id(rider_id)
         if not rider:
             raise HTTPException(status_code=404, detail="Rider not found")
         return rider
 
-    async def update_rider(self, rider_id: UUID, data: RiderUpdate) -> RiderOut:
-        rider = await self.get_rider(rider_id)
-        return await self.rider_repo.update(db_obj=rider, obj_in=data)
-
-    async def delete_rider(self, rider_id: UUID) -> bool:
-        exists = await self.rider_repo.get_by_id(rider_id)
-        if not exists:
+    async def update_rider(self, session: AsyncSession, rider_id: UUID, data: RiderUpdate):
+        rider = await self.repo.get_by_id(rider_id)
+        if not rider:
             raise HTTPException(status_code=404, detail="Rider not found")
+        return await self.repo.update(db_obj=rider, obj_in=data)
 
-        return await self.rider_repo.delete(rider_id)
+    async def delete_rider(self, session: AsyncSession, rider_id: UUID) -> bool:
+        rider = await self.repo.get_by_id(rider_id)
+        if not rider:
+            raise HTTPException(status_code=404, detail="Rider not found")
+        return await self.repo.delete(rider_id)
 
-    async def search_riders(self, field: str, value: str) -> List[RiderOut]:
-        return await self.rider_repo.search(field=field, value=value)
-
-    async def update_status(self, rider_id: UUID, status: str) -> RiderOut:
-        rider = await self.get_rider(rider_id)
-        return await self.rider_repo.update(db_obj=rider, obj_in={"status": status})
+    async def list_riders(self, session: AsyncSession):
+        # reuse BaseRepository.search or get_all
+        return await self.repo.get_all()

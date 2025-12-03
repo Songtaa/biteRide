@@ -2,13 +2,13 @@ from typing import List
 from uuid import UUID
 from fastapi import HTTPException
 
-from backend.app.domains.public.repository.rider_tenant import RiderTenantRepository
-from app.domains.tenants.repository import RiderRepository
-from app.domains.tenants.repository.tenant import TenantRepository
+from app.domains.public.repository.rider_tenant import RiderTenantRepository
+from app.domains.public.repository.rider import RiderRepository
+from app.domains.public.repository.tenant import TenantRepository
 
-from backend.app.domains.public.schemas.rider import (
+from app.domains.public.schemas.rider_tenant import (
     RiderTenantCreate,
-    RiderTenantOut
+    RiderTenantRead
 )
 
 
@@ -37,7 +37,7 @@ class RiderTenantService:
             raise HTTPException(status_code=404, detail="Tenant not found")
         return tenant
 
-    async def assign_rider(self, tenant_id: UUID, rider_id: UUID) -> RiderTenantOut:
+    async def assign_rider(self, tenant_id: UUID, rider_id: UUID) -> RiderTenantRead:
         await self._ensure_rider_exists(rider_id)
         await self._ensure_tenant_exists(tenant_id)
 

@@ -29,10 +29,10 @@ from fastapi import APIRouter, Depends, status
 from app.db.session import get_master_session, get_tenant_session
 from sqlalchemy.ext.asyncio.session import AsyncSession
 from app.domains.public.apis.users_router import create_user_Account
-from app.domains.tenants.services.tenant import TenantRepository
+from app.domains.public.services.tenant import TenantRepository
 import logging
-from app.domains.tenants.schemas.tenant import TenantCreate
-from app.domains.tenants.services.tenant import TenantService
+from app.domains.public.schemas.tenant import TenantCreate
+from app.domains.public.services.tenant import TenantService
 from app.utils.seeder import seed_tenant_admin_user, seed_global_admin_user
 from app.utils.schema_utils import SchemaFactory
 from sqlalchemy import pool, MetaData, text

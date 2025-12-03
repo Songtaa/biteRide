@@ -1,7 +1,7 @@
 from typing import Tuple
 from sqlalchemy import MetaData
 from sqlmodel import SQLModel
-from app.domains.tenants.models.tenant import Tenant
+from app.domains.public.models.tenant import Tenant
 from app.domains.public.models.user import User
 from app.db.base_class import APIBase
 

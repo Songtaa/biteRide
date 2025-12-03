@@ -4,37 +4,38 @@ from sqlmodel import select, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import HTTPException
 
-from app.repositories.base import BaseRepository
-from app.models.rider_tenant import RiderTenant
-from app.schemas.rider import RiderTenantCreate
+from app.crud.base import BaseRepository
+
+from app.domains.public.models.rider_tenant_link import RiderTenantLink
+from app.domains.public.schemas.rider_tenant import RiderTenantCreate
 
 
-class RiderTenantRepository(BaseRepository[RiderTenant, RiderTenantCreate, dict]):
+class RiderTenantRepository(BaseRepository[RiderTenantLink, RiderTenantCreate, dict]):
 
     def __init__(self, session: AsyncSession):
-        super().__init__(RiderTenant, session)
+        super().__init__(RiderTenantLink, session)
 
 
-    async def get_mapping(self, tenant_id: UUID, rider_id: UUID) -> Optional[RiderTenant]:
-        stmt = select(RiderTenant).where(
-            RiderTenant.tenant_id == tenant_id,
-            RiderTenant.rider_id == rider_id
+    async def get_mapping(self, tenant_id: UUID, rider_id: UUID) -> Optional[RiderTenantLink]:
+        stmt = select(RiderTenantLink).where(
+            RiderTenantLink.tenant_id == tenant_id,
+            RiderTenantLink.rider_id == rider_id
         )
         result = await self.session.execute(stmt)
         return result.scalars().first()
 
-    async def get_riders_for_tenant(self, tenant_id: UUID) -> List[RiderTenant]:
-        stmt = select(RiderTenant).where(RiderTenant.tenant_id == tenant_id)
+    async def get_riders_for_tenant(self, tenant_id: UUID) -> List[RiderTenantLink]:
+        stmt = select(RiderTenantLink).where(RiderTenantLink.tenant_id == tenant_id)
         result = await self.session.execute(stmt)
         return result.scalars().all()
 
-    async def get_tenants_for_rider(self, rider_id: UUID) -> List[RiderTenant]:
-        stmt = select(RiderTenant).where(RiderTenant.rider_id == rider_id)
+    async def get_tenants_for_rider(self, rider_id: UUID) -> List[RiderTenantLink]:
+        stmt = select(RiderTenantLink).where(RiderTenantLink.rider_id == rider_id)
         result = await self.session.execute(stmt)
         return result.scalars().all()
 
 
-    async def assign_rider(self, tenant_id: UUID, rider_id: UUID) -> RiderTenant:
+    async def assign_rider(self, tenant_id: UUID, rider_id: UUID) -> RiderTenantLink:
         """
         Assign rider to tenant if not already assigned.
         """
@@ -57,13 +58,13 @@ class RiderTenantRepository(BaseRepository[RiderTenant, RiderTenantCreate, dict]
         await self.session.commit()
         return True
 
-    async def list_tenant_riders(self, tenant_id: UUID) -> List[RiderTenant]:
+    async def list_tenant_riders(self, tenant_id: UUID) -> List[RiderTenantLink]:
         """
         List all riders assigned to a tenant.
         """
         return await self.get_riders_for_tenant(tenant_id)
 
-    async def list_rider_tenants(self, rider_id: UUID) -> List[RiderTenant]:
+    async def list_rider_tenants(self, rider_id: UUID) -> List[RiderTenantLink]:
         """
         List all tenants a rider belongs to.
         """

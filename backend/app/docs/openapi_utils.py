@@ -17,6 +17,7 @@ def filter_openapi_schema(schema: dict, context: str) -> dict:
             f"^{settings.API_V1_STR}/permissions/",
             # f"^{settings.API_V1_STR}/tenants$",  # Only tenant management (no trailing slash)
             f"^{settings.API_V1_STR}/tenants/",  # List/Create tenants
+            f"^{settings.API_V1_STR}/riders/",
             # f"^{settings.API_V1_STR}/tenants/[^/]+$"  # Specific tenant management
         ],
         "tenant": [

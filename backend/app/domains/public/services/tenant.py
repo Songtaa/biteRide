@@ -6,9 +6,9 @@ from fastapi import Depends, HTTPException
 from app.domains.public.services.user_service import UserService
 from app.utils.seeder import seed_global_admin_user, seed_tenant_admin_user
 from sqlmodel import Session
-from app.domains.tenants.schemas.tenant import TenantCreate, TenantUpdate, TenantRead, TenantSchema
-from app.domains.tenants.repository.tenant import TenantRepository
-from app.domains.tenants.models.tenant import Tenant
+from app.domains.public.schemas.tenant import TenantCreate, TenantUpdate, TenantRead, TenantSchema
+from app.domains.public.repository.tenant import TenantRepository
+from app.domains.public.models.tenant import Tenant
 from app.db.session import get_master_session
 from app.utils.tenant import create_schema, create_schema_tables
 from app.domains.public.schemas.user_schema import UserCreate

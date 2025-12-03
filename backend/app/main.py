@@ -67,7 +67,7 @@ app.include_router(get_docs_router(app))
 
 
 
-# Global routes (tenant registration, auth)
+# Global routes (tenant registration, public)
 app.include_router(global_router, prefix=f"{settings.API_V1_STR}")
 
 # Tenant-specific routes (school logic)

@@ -6,11 +6,11 @@ from fastapi import HTTPException
 from sqlalchemy import select, text
 # from app.domains.tenants.models.tenants import tenants
 from sqlmodel import Session
-from app.domains.tenants.models.tenant import Tenant
+from app.domains.public.models.tenant import Tenant
 from app.crud.base import BaseRepository
 from sqlmodel.ext.asyncio.session import AsyncSession
 from typing import Any, List, Optional, Dict
-from app.domains.tenants.schemas.tenant import TenantCreate, TenantUpdate, TenantSchema
+from app.domains.public.schemas.tenant import TenantCreate, TenantUpdate, TenantSchema
 
 
 class TenantRepository(BaseRepository[Tenant, TenantCreate, TenantUpdate]):

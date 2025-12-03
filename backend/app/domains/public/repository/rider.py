@@ -27,3 +27,10 @@ class RiderRepository(BaseRepository[Rider, RiderCreate, RiderUpdate]):
         stmt = select(Rider).where(Rider.is_active == True)
         result = await self.session.execute(stmt)
         return result.scalars().all()
+    
+
+    async def list_active(self) -> List[Rider]:
+        stmt = select(self.model).where(self.model.status == "online")
+        res = await self.session.execute(stmt)
+        return res.scalars().all()
+

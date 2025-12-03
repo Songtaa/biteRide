@@ -12,7 +12,7 @@ from app.domains.tenants.models.tenant_role import TenantRole
 from app.domains.public.models.refresh_token import RefreshToken
 from app.domains.public.models.token_blocklist import TokenBlocklist
 
-from app.domains.tenants.models.tenant import Tenant
+from app.domains.public.models.tenant import Tenant
 
 
 __all__ = [

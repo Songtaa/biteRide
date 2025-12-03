@@ -1,8 +1,8 @@
 """init
 
-Revision ID: fe864a53d82a
+Revision ID: 9afb4139df82
 Revises: 
-Create Date: 2025-11-28 18:37:36.717466
+Create Date: 2025-12-03 10:35:30.025477
 
 """
 from typing import Sequence, Union
@@ -13,7 +13,7 @@ import sqlmodel
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'fe864a53d82a'
+revision: str = '9afb4139df82'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -35,6 +35,19 @@ def upgrade() -> None:
     )
     op.create_index(op.f('ix_public_permissions_id'), 'permissions', ['id'], unique=False, schema='public')
     op.create_index(op.f('ix_public_permissions_name'), 'permissions', ['name'], unique=True, schema='public')
+    op.create_table('riders',
+    sa.Column('name', sa.String(length=100), nullable=False),
+    sa.Column('phone', sa.String(length=20), nullable=False),
+    sa.Column('status', sa.String(length=20), nullable=False),
+    sa.Column('current_location', sa.String(length=255), nullable=True),
+    sa.Column('id', sa.UUID(), nullable=False),
+    sa.Column('created_date', sa.DateTime(), nullable=False),
+    sa.Column('updated_date', sa.DateTime(), nullable=False),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('phone'),
+    schema='public'
+    )
+    op.create_index(op.f('ix_public_riders_id'), 'riders', ['id'], unique=False, schema='public')
     op.create_table('roles',
     sa.Column('name', sa.String(), nullable=False),
     sa.Column('description', sa.String(), nullable=False),
@@ -206,6 +219,8 @@ def downgrade() -> None:
     op.drop_index(op.f('ix_public_roles_name'), table_name='roles', schema='public')
     op.drop_index(op.f('ix_public_roles_id'), table_name='roles', schema='public')
     op.drop_table('roles', schema='public')
+    op.drop_index(op.f('ix_public_riders_id'), table_name='riders', schema='public')
+    op.drop_table('riders', schema='public')
     op.drop_index(op.f('ix_public_permissions_name'), table_name='permissions', schema='public')
     op.drop_index(op.f('ix_public_permissions_id'), table_name='permissions', schema='public')
     op.drop_table('permissions', schema='public')

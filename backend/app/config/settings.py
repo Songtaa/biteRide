@@ -30,7 +30,7 @@ class Settings(BaseSettings):
     
     # --- Core Application Settings ---
     API_V1_STR: str = "/api/v1"
-    PROJECT_NAME: str = "EduTenant Management App"
+    PROJECT_NAME: str = "biteRide App"
     ENVIRONMENT: Literal["local", "staging", "production"] = "local"
     DOMAIN: str = "localhost"
     DOCKER: bool = os.getenv("DOCKER", "false").lower() == "true"
