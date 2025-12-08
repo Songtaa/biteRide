@@ -13,7 +13,7 @@ from app.utils.dependencies import get_master_session_dep, get_tenant_session_de
 
 
 
-router = APIRouter()
+# router = APIRouter()
 
 # sessionDep = Annotated[AsyncSession, Depends(get_master_session)]
 sessionDep = Annotated[AsyncSession, Depends(get_master_session_dep)]

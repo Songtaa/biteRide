@@ -7,13 +7,13 @@ from fastapi.responses import JSONResponse
 from sqlalchemy.exc import SQLAlchemyError
 
 
-class EdutenantException(Exception):
+class BiterideException(Exception):
     """This is the base class for all bookly errors"""
 
     pass
 
 
-class InvalidToken(EdutenantException):
+class InvalidToken(BiterideException):
     """User has provided an invalid or expired token"""
 
     pass
@@ -22,61 +22,61 @@ class TenantCreationException(HTTPException):
     def __init__(self, detail: str):
         super().__init__(status_code=500, detail=detail)
 
-class RevokedToken(EdutenantException):
+class RevokedToken(BiterideException):
     """User has provided a token that has been revoked"""
 
     pass
 
 
-class AccessTokenRequired(EdutenantException):
+class AccessTokenRequired(BiterideException):
     """User has provided a refresh token when an access token is needed"""
 
     pass
 
 
-class RefreshTokenRequired(EdutenantException):
+class RefreshTokenRequired(BiterideException):
     """User has provided an access token when a refresh token is needed"""
 
     pass
 
 
-class UserAlreadyExists(EdutenantException):
+class UserAlreadyExists(BiterideException):
     """User has provided an email for a user who exists during sign up."""
 
     pass
 
 
-class InvalidCredentials(EdutenantException):
+class InvalidCredentials(BiterideException):
     """User has provided wrong email or password during log in."""
 
     pass
 
 
-class InsufficientPermission(EdutenantException):
+class InsufficientPermission(BiterideException):
     """User does not have the neccessary permissions to perform an action."""
 
     pass
 
 
-class BookNotFound(EdutenantException):
+class BookNotFound(BiterideException):
     """Book Not found"""
 
     pass
 
 
-class TagNotFound(EdutenantException):
+class TagNotFound(BiterideException):
     """Tag Not found"""
 
     pass
 
 
-class TagAlreadyExists(EdutenantException):
+class TagAlreadyExists(BiterideException):
     """Tag already exists"""
 
     pass
 
 
-class UserNotFound(EdutenantException):
+class UserNotFound(BiterideException):
     """User Not found"""
 
     pass
@@ -87,11 +87,19 @@ class AccountNotVerified(Exception):
 
     pass
 
+class NotFoundException(Exception):
+    """Gateway config not found."""
+
+    pass
+class BadRequestException(Exception):
+    """
+    Provider already configured for this tenant.
+    """
 
 def create_exception_handler(
     status_code: int, initial_detail: Any
 ) -> Callable[[Request, Exception], JSONResponse]:
-    async def exception_handler(request: Request, exc: EdutenantException):
+    async def exception_handler(request: Request, exc: BiterideException):
         return JSONResponse(content=initial_detail, status_code=status_code)
 
     return exception_handler

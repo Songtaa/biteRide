@@ -19,5 +19,4 @@ class Rider(APIBase):
     tenants: Mapped[List["Tenant"]] = relationship(
         secondary="rider_tenant_link",
         back_populates="riders",
-    )
-    
+    )  
