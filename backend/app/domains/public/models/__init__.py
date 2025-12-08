@@ -12,6 +12,7 @@ from app.domains.public.models.refresh_token import RefreshToken
 from app.domains.public.models.token_blocklist import TokenBlocklist
 
 from app.domains.public.models.tenant import Tenant
+from app.domains.public.models.payment_gateway import PaymentGatewayConfig
 
 
 __all__ = [

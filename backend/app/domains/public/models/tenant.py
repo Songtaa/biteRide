@@ -42,3 +42,8 @@ class Tenant(APIBase):
         back_populates="tenants",
         viewonly=True
     )
+
+    payment_configs: Mapped[list["PaymentGatewayConfig"]] = relationship(
+    back_populates="tenant",
+    cascade="all, delete-orphan"
+    )

@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyd
+*.so
+.venv/
+.mypy_cache
+.coverage
+htmlcov
+.cache
+app.egg-info
+
+
+
+
