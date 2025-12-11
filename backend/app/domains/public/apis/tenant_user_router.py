@@ -6,19 +6,18 @@ from pydantic import UUID4
 from sqlalchemy.ext.asyncio.session import AsyncSession
 from app.utils.auth_dep import AccessTokenBearer
 
-from app.domains.auth.schemas.user_schema import (
+from app.domains.public.schemas.user_schema import (
     UserCreate,
     UserSchema,
     UserUpdate,
 )
-from app.domains.auth.services.user_service import UserService
+from app.domains.public.services.user_service import UserService
 
 user_router = APIRouter(
     prefix="/users",
     tags=["Users"],
     responses={404: {"description": "Not found"}},
 )
-
 
 
 async def get_master_session_dep() -> AsyncGenerator[AsyncSession, None]:

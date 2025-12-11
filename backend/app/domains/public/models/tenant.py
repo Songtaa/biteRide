@@ -47,3 +47,13 @@ class Tenant(APIBase):
     back_populates="tenant",
     cascade="all, delete-orphan"
     )
+
+    vendors: Mapped[list["Vendor"]] = relationship(
+    back_populates="tenant",
+    cascade="all, delete-orphan"
+    )
+
+    categories: Mapped[list["Category"]] = relationship(
+    back_populates="tenant",
+    cascade="all, delete-orphan"
+    )

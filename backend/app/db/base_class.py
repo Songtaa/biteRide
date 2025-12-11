@@ -38,7 +38,7 @@ class BaseMixin:
         DateTime, default=datetime.utcnow, nullable=False
     )
     updated_date: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False
+        DateTime, default=datetime.now, onupdate=datetime.now, nullable=False
     )
 
 

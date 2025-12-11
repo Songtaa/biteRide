@@ -19,11 +19,13 @@ def filter_openapi_schema(schema: dict, context: str) -> dict:
             f"^{settings.API_V1_STR}/tenants/",  # List/Create tenants
             f"^{settings.API_V1_STR}/riders/",
             f"^{settings.API_V1_STR}/payment-gateways/",
-            # f"^{settings.API_V1_STR}/tenants/[^/]+$"  # Specific tenant management
+            f"^{settings.API_V1_STR}/tenants/[^/]+$"  # Specific tenant management
+            f"^{settings.API_V1_STR}/riders/[^/]+/tenants/",  # /riders/{id}/tenants
+            f"^{settings.API_V1_STR}/tenants/[^/]+/riders/",  # /tenants/{id}/riders
         ],
         "tenant": [
-            f"^{settings.API_V1_STR}/tenants/[^/]+/services/",
-            f"^{settings.API_V1_STR}/tenants/[^/]+/schools/"
+            f"^{settings.API_V1_STR}/tenants/[^/]+/vendors/",
+            f"^{settings.API_V1_STR}/tenants/[^/]+/categories/"
         ]
     }
     

@@ -17,7 +17,7 @@ global_router.include_router(tenant_management_router, prefix="/tenants", tags=[
 global_router.include_router(user_router, prefix="/users", tags=["Users"])
 global_router.include_router(role_router, prefix="/roles", tags=["Roles"])
 global_router.include_router(permission_router, prefix="/permissions", tags=["Permissions"])
-global_router.include_router(rider_router, prefix="/riders", tags=["Tenant"])
+global_router.include_router(rider_router, prefix="/riders", tags=["Riders"])
 global_router.include_router(rider_tenant_router, prefix="/riders", tags=["Rider Tenants"])
 global_router.include_router(tenant_rider_router, prefix="/riders", tags=["Tenant Riders"])
 global_router.include_router(payment_router, prefix="/payment-gateways", tags=["Payment Gateways"])

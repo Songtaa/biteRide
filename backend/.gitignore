@@ -3,7 +3,6 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-*.pyd
 *.so
 .venv/
 .mypy_cache
@@ -11,7 +10,3 @@ __pycache__/
 htmlcov
 .cache
 app.egg-info
-
-
-
-

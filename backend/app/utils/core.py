@@ -10,7 +10,7 @@ from sqlalchemy.orm import Session
 def create_jwt(data: dict, exp: timedelta = None):
     data.update(
         {
-            "exp": datetime.utcnow()
+            "exp": datetime.now()
             + timedelta(minutes=exp if exp else settings.ACCESS_TOKEN_EXPIRE_MINUTES)
         }
     )
